@@ -1,7 +1,7 @@
 const insultDom = (word1 , word2, noun) => {
   let insultString = '';
   insultString += `<div class="jumbotron">`;
-  insultString += `<h3>${word1} ${word2} ${noun}</h3>`;
+  insultString += `<h2 class="text-center">${word1} ${word2} ${noun}</h2>`;
   insultString += `<div>`;
   printToDom(insultString);
 };
