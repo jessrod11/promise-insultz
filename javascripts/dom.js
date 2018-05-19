@@ -1,11 +1,15 @@
-const insultDom = (insults) => {
+const insultDom = (word1 , word2, noun) => {
   let insultString = '';
-  insults.forEach((insult) => {
-    insultString += `<div class="jumbotron">`;
-    insultString +=   `<h1>${insult.text}</h1>`;
-    insultString += `</div>`;
-  });
-  $('#output-insults').append(insultString);
+  insultString += `<div class="jumbotron">`;
+  insultString += `<h3>${word1} ${word2} ${noun}</h3>`;
+  insultString += `<div>`;
+  printToDom(insultString);
 };
 
-module.exports = insultDom;
+const printToDom = (insult) => {
+  $('#output-insults').html(insult);
+};
+
+module.exports = {
+  insultDom,
+};

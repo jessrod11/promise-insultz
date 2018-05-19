@@ -1,4 +1,7 @@
-const dom = require('./dom');
+// const dom = require('./dom');
+
+let nouns = [];
+let descriptors = [];
 
 const descriptorsJson = () => {
   return new Promise ((resolve, reject) => {
@@ -12,24 +15,45 @@ const descriptorsJson = () => {
   });
 };
 
-// const nounJson = () => {
-//   return new Promise ((resolve, reject) => {
-//     $.get('../db/nouns.json')
-//       .done((data) => {
-//         resolve(data);
-//       })
-//       .fail((err) => {
-//         reject('i screwed up again', err);
-//       });
-//   });
-// };
-
-const initializer = () => {
-  descriptorsJson().then((resolvedData) => {
-    dom(resolvedData);
-  }).catch((errorMsg) => {
-    console.error(errorMsg);
+const nounsJson = () => {
+  return new Promise ((resolve, reject) => {
+    $.get('../db/nouns.json')
+      .done((data) => {
+        resolve(data.nouns);
+      })
+      .fail((err) => {
+        reject('i screwed up again', err);
+      });
   });
 };
 
-module.exports = initializer;
+const getAllData = () => {
+  // resolve promises - promiseAll (because the data is the same and will act the same)
+  return Promise.all([nounsJson(), descriptorsJson(),])
+    .then((results) => {
+      // return results; // add breakpoint here to see what results is (same as console logging)
+      nouns = results[0];
+      descriptors = results[1];
+    })
+    .catch((errorMsg) => {
+      console.error('what did you do, Stix', errorMsg);
+    });
+};
+
+const getNouns = () => {
+  return nouns[0].text;
+};
+
+const getDescriptors = () => {
+  return descriptors[0].text;
+};
+
+const initializer = () => {
+  getAllData();
+};
+
+module.exports = {
+  initializer,
+  getNouns,
+  getDescriptors,
+};
