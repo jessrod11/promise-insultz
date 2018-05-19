@@ -1,1 +1,6 @@
-// You should probably write some code here
+const data = require('./data');
+require('./events');
+
+$(document).ready(() => {
+  data.initializer();
+});
